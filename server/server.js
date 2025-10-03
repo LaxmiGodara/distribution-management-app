@@ -5,6 +5,14 @@ const mongoose = require('mongoose');
 
 
 const app = express();
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+const productRoutes = require('./routes/productRoutes');
+
+// ... after app.use(express.json());
+app.use('/api/products', productRoutes);
+
 
 
 
