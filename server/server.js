@@ -8,11 +8,20 @@ const express = require('express');
 // Import Mongoose for interacting with MongoDB
 const mongoose = require('mongoose');
 
+const cors = require('cors');
+
 // Create an instance of an Express application
 const app = express();
 
 // Use Express middleware to automatically parse incoming JSON request bodies
 app.use(express.json());
+
+
+
+// ... after const app = express();
+app.use(cors());
+app.use(express.json());
+
 
 // Import product-related routes from the specified file
 const productRoutes = require('./routes/productRoutes');
