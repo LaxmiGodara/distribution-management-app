@@ -1,26 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import CustomerForm from './components/CustomerForm';
 
 function App() {
   const [customers, setCustomers] = useState([]);
 
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        // Make a GET request to your backend's customer endpoint
-        const response = await axios.get('http://localhost:5000/api/customers');
-        setCustomers(response.data);
-      } catch (error) {
-        console.error('Error fetching customers:', error);
-      }
-    };
+  const fetchCustomers = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/api/customers');
+      setCustomers(response.data);
+    } catch (error) {
+      console.error('Error fetching customers:', error);
+    }
+  };
 
+  useEffect(() => {
     fetchCustomers();
-  }, []); // The empty array ensures this effect runs only once
+  }, []);
+
+  const handleCustomerAdded = (newCustomer) => {
+    setCustomers([...customers, newCustomer]);
+  };
 
   return (
     <div style={{ padding: '20px' }}>
       <h1>Distribution Management App</h1>
+      <CustomerForm onCustomerAdded={handleCustomerAdded} />
       <h2>Customer List</h2>
       {customers.length > 0 ? (
         <ul>
@@ -29,7 +34,7 @@ function App() {
           ))}
         </ul>
       ) : (
-        <p>Loading customers...</p>
+        <p>No customers found. Add one above!</p>
       )}
     </div>
   );
