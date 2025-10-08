@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CustomerRow({ customer }) {
+function CustomerRow({ customer, onLogDelivery, isLogged }) {
   const rowStyle = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -8,6 +8,8 @@ function CustomerRow({ customer }) {
     padding: '10px',
     borderBottom: '1px solid #eee',
     margin: '5px 0',
+    backgroundColor: isLogged ? '#f0f0f0' : '#fff',
+    color: isLogged ? '#999' : '#000',
   };
 
   const buttonStyle = {
@@ -15,7 +17,7 @@ function CustomerRow({ customer }) {
     marginLeft: '5px',
     border: '1px solid #ccc',
     borderRadius: '4px',
-    cursor: 'pointer',
+    cursor: isLogged ? 'not-allowed' : 'pointer',
   };
 
   return (
@@ -24,10 +26,21 @@ function CustomerRow({ customer }) {
         <strong>{customer.name}</strong> ({customer.phone})
       </div>
       <div>
-        {/* These buttons are placeholders for now. We will add logic tomorrow. */}
-        <button style={buttonStyle}>✅</button>
-        <button style={buttonStyle}>❌</button>
-        <button style={buttonStyle}>⏳</button>
+        <button
+          style={buttonStyle}
+          onClick={() => onLogDelivery(customer._id, 'Delivered')}
+          disabled={isLogged}
+        >✅</button>
+        <button
+          style={buttonStyle}
+          onClick={() => onLogDelivery(customer._id, 'Damaged')}
+          disabled={isLogged}
+        >❌</button>
+        <button
+          style={buttonStyle}
+          onClick={() => onLogDelivery(customer._id, 'Not Delivered')}
+          disabled={isLogged}
+        >⏳</button>
       </div>
     </div>
   );

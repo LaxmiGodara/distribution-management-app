@@ -5,6 +5,7 @@ import CustomerRow from '../components/CustomerRow';
 function DailyLogPage() {
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loggedCustomers, setLoggedCustomers] = useState([]);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -21,6 +22,21 @@ function DailyLogPage() {
     fetchCustomers();
   }, []);
 
+  const handleLogDelivery = async (customerId, status) => {
+    try {
+      const logData = {
+        customer: customerId,
+        status: status,
+        date: new Date().toISOString(),
+      };
+      await axios.post('http://localhost:5000/api/dailylog', logData);
+      setLoggedCustomers([...loggedCustomers, customerId]);
+    } catch (error) {
+      console.error('Error logging delivery:', error);
+      alert('Failed to log delivery.');
+    }
+  };
+
   if (loading) {
     return <p>Loading customers...</p>;
   }
@@ -31,7 +47,12 @@ function DailyLogPage() {
       <div>
         {customers.length > 0 ? (
           customers.map((customer) => (
-            <CustomerRow key={customer._id} customer={customer} />
+            <CustomerRow
+              key={customer._id}
+              customer={customer}
+              onLogDelivery={handleLogDelivery}
+              isLogged={loggedCustomers.includes(customer._id)}
+            />
           ))
         ) : (
           <p>No customers found.</p>
