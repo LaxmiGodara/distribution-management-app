@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 
 const dailyLogRoutes = require('./routes/dailyLogRoutes');
 
+const userRoutes = require('./routes/userRoutes');
+
 
 // Import the CORS (Cross-Origin Resource Sharing) middleware to allow or restrict resources to be requested from another domain outside the server's own domain.
 // This is useful for enabling your API to be accessed by client applications running on different origins (e.g., frontend running on localhost:3000 accessing backend on localhost:8000).
@@ -25,6 +27,10 @@ app.use(express.json());
 
 // ... with your other app.use() statements
 app.use('/api/dailylog', dailyLogRoutes);
+
+// ... with your other app.use() statements
+app.use('/api/users', userRoutes);
+
 
 
 // Import product-related routes from the specified file

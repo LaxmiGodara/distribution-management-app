@@ -30,16 +30,19 @@ function CustomerRow({ customer, onLogDelivery, isLogged }) {
           style={buttonStyle}
           onClick={() => onLogDelivery(customer._id, 'Delivered')}
           disabled={isLogged}
+          title="Mark as Delivered"
         >✅</button>
         <button
           style={buttonStyle}
           onClick={() => onLogDelivery(customer._id, 'Damaged')}
           disabled={isLogged}
+          title="Mark as Damaged"
         >❌</button>
         <button
           style={buttonStyle}
           onClick={() => onLogDelivery(customer._id, 'Not Delivered')}
           disabled={isLogged}
+          title="Mark as Not Delivered"
         >⏳</button>
       </div>
     </div>
