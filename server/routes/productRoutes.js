@@ -13,6 +13,8 @@ const {
   deleteProduct,    // Controller to handle deleting a product by its ID
 } = require('../controllers/productController');
 
+const { protect } = require('../middleware/authMiddleware');
+
 // Define the route for the root path ('/')
 // POST /api/products - Create a new product
 // GET /api/products - Retrieve all products
